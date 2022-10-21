@@ -1,5 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react'
+import PaginationComponent from './components/PaginationComponents';
+import PaginationSelector from './components/PaginationSelector';
 
 const fetchData = async (url) => {
   const result = await fetch(url)
@@ -37,23 +39,11 @@ function App() {
   }, [itensPerPage])
   return (
     <div className="App">
-      <div>
-        <select value={itensPerPage} onChange={(e) => setItensPerPage(Number(e.target.value))}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={25}>25</option>
-        </select>
-      </div>
-      <div>
-        {
-          Array.from(Array(totalPages), (item, index) => {
-            return (
-              <button value={index} onClick={(e) => setCurrentPage(Number(e.target.value))}>{index + 1}</button>
-            )
-          })
-        }
-      </div>
+      
+      <PaginationSelector itensPerPage={itensPerPage} setItensPerPage={setItensPerPage} />
+
+      <PaginationComponent totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      
       {currentItens.map(i => {
         return (
           <div className='item'>
